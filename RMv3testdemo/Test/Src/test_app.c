@@ -68,8 +68,11 @@ void Test_task(void)
     can2_tx_data[0]++;
     CAN_Send_Msg(&hcan1, can1_tx_data, TEST_CAN1_ID, 8);
     CAN_Send_Msg(&hcan2, can2_tx_data, TEST_CAN2_ID, 8);
-    
     //HAL_UART_Transmit(&huart3, can1_tx_data, 1, 100);
+		    
+		//uint8_t testing_data[8] = {0x1,0x2};
+		//HAL_UART_Transmit(&huart3,testing_data, 1, 100);
+		//HAL_UART_Transmit(&huart3,&testing_data[1], 1, 100);
     
   }
   

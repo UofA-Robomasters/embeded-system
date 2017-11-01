@@ -23,8 +23,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   }
   if(huart == &huart3)
   {
-    __HAL_UART_CLEAR_PEFLAG(&huart3);
+    		uint8_t test_data1[8] = {0x2};
+		HAL_UART_Transmit(&huart3,test_data1,1,10);
+		__HAL_UART_CLEAR_PEFLAG(&huart3);
     HAL_UART_Receive_IT(&huart3, uart3_rx_buff, 1);
+
   }
   
 }

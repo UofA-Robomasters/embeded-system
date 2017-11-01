@@ -268,7 +268,9 @@ void USART2_IRQHandler(void)
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
-  HAL_UART_Transmit_IT(&huart3,(uint8_t*)0x01,1);
+	uint8_t test_data[8] = {0x1};
+ // HAL_UART_Transmit_IT(&huart3,test_data,1);
+//	huart3.gState = HAL_UART_STATE_READY;
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
