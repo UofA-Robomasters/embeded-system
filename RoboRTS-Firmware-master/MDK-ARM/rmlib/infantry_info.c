@@ -49,7 +49,7 @@ void pc_data_handle(uint8_t *p_frame)
   memcpy(p_header, p_frame, HEADER_LEN);
 
   uint16_t data_length = p_header->data_length;
-  uint16_t cmd_id      = *(uint16_t *)(p_frame + HEADER_LEN);
+  uint16_t cmd_id      = *(uint16_t *)(p_frame + HEADER_LEN); //the value stored at p_frame + HEADER_LEN
   uint8_t *data_addr   = p_frame + HEADER_LEN + CMD_LEN;
 
   taskENTER_CRITICAL();
@@ -58,6 +58,7 @@ void pc_data_handle(uint8_t *p_frame)
   {
     case CHASSIS_CTRL_ID:
       memcpy(&pc_rece_mesg.chassis_control_data, data_addr, data_length);
+		//do: print the length to see how long is one data
     break;
 
     case GIMBAL_CTRL_ID:

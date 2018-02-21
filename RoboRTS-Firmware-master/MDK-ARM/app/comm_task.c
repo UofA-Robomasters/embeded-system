@@ -262,10 +262,10 @@ void pc_unpack_task(void const *argu) //send/receive data to pc
                          PC_UART_IDLE_SIGNAL | \
                          PC_DMA_FULL_SIGNAL, osWaitForever); //use uart idle for our purpose
     
-    if (event.status == osEventSignal)
+    if (event.status == osEventSignal) //signal event occurred
     {
       //receive pc data puts fifo
-      if (event.value.signals & PC_UART_IDLE_SIGNAL) //event.value.signals is a flag, flags should be used for 
+      if (event.value.signals & PC_UART_IDLE_SIGNAL) //if (event has signal and pc_uart_idle_signal) falg seted
       {
         dma_buffer_to_unpack_buffer(&pc_rx_obj, UART_IDLE_IT);
         unpack_flag = 1;
