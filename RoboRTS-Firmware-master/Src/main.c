@@ -141,7 +141,7 @@ int main(void)
   gimbal_param_init();
   shot_param_init();
   chassis_param_init();
-  detector_param_init();
+  //detector_param_init();
   communicate_param_init();
   imu_param_init();
   cali_param_init();

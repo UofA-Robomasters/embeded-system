@@ -150,25 +150,25 @@ void detect_task(void const *argu)
     detect_time_ms = HAL_GetTick() - detect_time_last;
     detect_time_last = HAL_GetTick();
     
-    /* module offline detect */
-    module_offline_detect();
+//    /* module offline detect */
+//    module_offline_detect();
 
-    if (g_err.err_now != NULL)
-    {
-      //LED_G_OFF;
-      module_offline_callback();
-    }
-    else
-    {
-      g_err.beep_ctrl = 0;
-      //LED_G_ON;
-    }
-    
-    BEEP_TUNE = g_err.beep_tune;
-    BEEP_CTRL = 0;//g_err.beep_ctrl;
-    
-    detect_stack_surplus = uxTaskGetStackHighWaterMark(NULL);
-    
+//    if (g_err.err_now != NULL)
+//    {
+//      //LED_G_OFF;
+//      module_offline_callback();
+//    }
+//    else
+//    {
+//      g_err.beep_ctrl = 0;
+//      //LED_G_ON;
+//    }
+//    
+//    BEEP_TUNE = g_err.beep_tune;
+//    BEEP_CTRL = 0;//g_err.beep_ctrl;
+//    
+//    detect_stack_surplus = uxTaskGetStackHighWaterMark(NULL);
+//    
     osDelayUntil(&detect_wake_time, DETECT_TASK_PERIOD);
   }
 }
