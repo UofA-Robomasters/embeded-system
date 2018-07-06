@@ -39,6 +39,7 @@ typedef enum
   GAME_INFO_ID       = 0x0001,  //10Hz
   REAL_BLOOD_DATA_ID = 0x0002,
   REAL_SHOOT_DATA_ID = 0x0003,
+	HEAT_POWER_DATA_ID = 0x0004,
   REAL_FIELD_DATA_ID = 0x0005,  //10hZ
   GAME_RESULT_ID     = 0x0006,
   GAIN_BUFF_ID       = 0x0007,
@@ -76,7 +77,7 @@ typedef __packed struct
    3 5 seconds count down
    4 fighting stage
    5 result computing stage */
-  uint8_t    reserved;
+  uint8_t    reserved; //level
   uint16_t   remain_hp;
   uint16_t   max_hp;
   position_t position;
@@ -112,6 +113,21 @@ typedef __packed struct
   float   bullet_speed;
   float   reserved2;
 } real_shoot_t;
+
+
+/** 
+  * @brief  rfid detect data(0x0005)
+  */
+typedef __packed struct
+{
+	float chassisVolt;
+	float chassisCurrent;
+	float chassisPower;
+	float chassisPowerBuffer;
+	uint16_t shooterHeat0;
+	uint16_t shooterHeat1;
+	
+} heat_power_data_t;
 
 /** 
   * @brief  rfid detect data(0x0005)
@@ -167,6 +183,7 @@ typedef struct
   game_robot_state_t game_information;
   robot_hurt_data_t  blood_changed_data;
   real_shoot_t       real_shoot_data;
+	heat_power_data_t  heat_power_data;
   rfid_detect_t      rfid_data;
   game_result_t      game_result_data;
   get_buff_t         get_buff_data;

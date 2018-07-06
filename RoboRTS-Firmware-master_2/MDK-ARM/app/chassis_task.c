@@ -47,7 +47,7 @@
 /* twist period time (ms) */
 #define TWIST_PERIOD   1500
 /* warning surplus energy */
-#define WARNING_ENERGY 40.0f
+#define WARNING_ENERGY 60.0f
 
 UBaseType_t chassis_stack_surplus;
 
@@ -124,6 +124,7 @@ void chassis_task(void const *argu)
   {
     chassis.current[i] = pid_calc(&pid_spd[i], chassis.wheel_speed_fdb[i], chassis.wheel_speed_ref[i]);
   }
+	power_limit_handle(); //power limit control
   
   if (!chassis_is_controllable())
   {
@@ -259,7 +260,7 @@ void mecanum_calc(float vx, float vy, float vw, int16_t speed[])
 
 
 /**
-  * @brief  nitialize chassis motor pid parameter
+  * @brief  initialize chassis motor pid parameter
   * @usage  before chassis loop use this function
   */
 void chassis_param_init(void)
@@ -289,7 +290,7 @@ void chassis_param_init(void)
   memset(&pc_rece_mesg.structure_data, 0, sizeof(pc_rece_mesg.structure_data));
 }
 
-#if 0
+#if 1
 int32_t total_cur_limit;
 int32_t total_cur;
 void power_limit_handle(void)
@@ -301,9 +302,9 @@ void power_limit_handle(void)
   }
   else
   {
-    if (judge_rece_mesg.game_information.remain_power < WARNING_ENERGY)
-      total_cur_limit = ((judge_rece_mesg.game_information.remain_power * \
-                          judge_rece_mesg.game_information.remain_power)/ \
+    if (judge_rece_mesg.heat_power_data.chassisPowerBuffer < WARNING_ENERGY)
+      total_cur_limit = ((judge_rece_mesg.heat_power_data.chassisPowerBuffer * \
+                          judge_rece_mesg.heat_power_data.chassisPowerBuffer)/ \
                           (WARNING_ENERGY*WARNING_ENERGY)) * 40000;
     else
       total_cur_limit = 40000;
