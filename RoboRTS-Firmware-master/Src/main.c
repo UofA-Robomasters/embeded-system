@@ -69,6 +69,7 @@
 #include "chassis_task.h"
 #include "detect_task.h"
 #include "imu_task.h"
+#include "testing_task.h"
 #include "bsp_imu.h"
 #include "bsp_io.h"
 /* USER CODE END Includes */
@@ -141,7 +142,7 @@ int main(void)
   gimbal_param_init();
   shot_param_init();
   chassis_param_init();
-  //detector_param_init();
+  detector_param_init();
   communicate_param_init();
   imu_param_init();
   cali_param_init();
@@ -149,7 +150,7 @@ int main(void)
   pwm_device_init();
   mpu_device_init();
   can_device_init();
-  gyro_device_init();
+  //gyro_device_init();
   
   //open can receive it
   can_receive_start();

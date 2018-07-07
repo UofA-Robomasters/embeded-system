@@ -82,7 +82,7 @@ void chassis_task(void const *argu)
       chassis.position_ref = 0;
       taskEXIT_CRITICAL();
       
-      chassis.vw = pid_calc(&pid_chassis_angle, gim.sensor.yaw_relative_angle, chassis.position_ref); 
+      chassis.vw = pid_calc(&pid_chassis_angle, gim.sensor.yaw_relative_angle, chassis.position_ref); //used to be -pid_calc
     }break;
     
     case AUTO_SEPARATE_GIMBAL:
@@ -124,10 +124,10 @@ void chassis_task(void const *argu)
     chassis.current[i] = pid_calc(&pid_spd[i], chassis.wheel_speed_fdb[i], chassis.wheel_speed_ref[i]);
   }
   
-  if (!chassis_is_controllable())
-  {
-    memset(chassis.current, 0, sizeof(chassis.current));
-  }
+//  if (!chassis_is_controllable())
+//  {
+//    memset(chassis.current, 0, sizeof(chassis.current));
+//  }
   
   memcpy(glb_cur.chassis_cur, chassis.current, sizeof(chassis.current));
   osSignalSet(can_msg_send_task_t, CHASSIS_MOTOR_MSG_SEND);

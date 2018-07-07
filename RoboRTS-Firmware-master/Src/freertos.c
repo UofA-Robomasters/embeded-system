@@ -63,6 +63,7 @@
 #include "info_get_task.h"
 #include "bsp_uart.h"
 #include "sys_config.h"
+#include "testing_task.h"
 /* USER CODE END Includes */
 
 /* Variables -----------------------------------------------------------------*/
@@ -80,6 +81,9 @@ TaskHandle_t imu_task_t;
 TaskHandle_t freq_info_task_t;
 TaskHandle_t judge_unpack_task_t;
 TaskHandle_t pc_unpack_task_t;
+
+/*task adding try*/
+TaskHandle_t testing_task_t;
 
 osTimerId chassis_timer_id;
 osTimerId gimbal_timer_id;
@@ -189,6 +193,10 @@ void MX_FREERTOS_Init(void) {
     osThreadDef(imuTask, imu_task, osPriorityNormal, 0, 128);
     imu_task_t = osThreadCreate(osThread(imuTask), NULL);
     
+		//testing 
+		osThreadDef(testingTask, testing_task, osPriorityNormal, 0, 128);
+    testing_task_t = osThreadCreate(osThread(testingTask), NULL);
+		
     /* unpack task */
     osThreadDef(unpackTask, judge_unpack_task, osPriorityNormal, 0, 512);
     judge_unpack_task_t = osThreadCreate(osThread(unpackTask), NULL);

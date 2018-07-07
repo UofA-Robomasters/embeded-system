@@ -84,7 +84,7 @@ static void init_quaternion(void)
   #ifdef BOARD_DOWN
   if(hx<0 && hy <0)   //OK
   {
-    if(fabs(temp) >= 1)
+    if(fabs(temp) >= 1) //fabs - compute absolute value
     {
       q0 = -0.005;
       q1 = -0.199;

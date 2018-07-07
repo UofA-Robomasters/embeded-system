@@ -66,11 +66,11 @@ void shot_task(void const *argu)
         
         fric_wheel_ctrl();
         
-        if (!shot.fric_wheel_run)
-        {
-          shot.shoot_cmd   = 0;
-          shot.c_shoot_cmd = 0;
-        }
+//        if (!shot.fric_wheel_run)
+//        {
+//          shot.shoot_cmd   = 0;
+//          shot.c_shoot_cmd = 0;
+//        }
         
 #ifdef OLD_TRIGGER  
         /*
@@ -104,14 +104,15 @@ void shot_task(void const *argu)
         
         trig.key = get_trigger_key_state();
         
-        if (shot.fric_wheel_run)
-        {
-          shoot_bullet_handle();
-        }
-        else
-        {
-          pid_trigger_speed.out = 0;
-        }
+//        if (shot.fric_wheel_run)
+//        {
+//          shoot_bullet_handle();
+//        }
+//        else
+//        {
+//          pid_trigger_speed.out = 0;
+//        }
+				shoot_bullet_handle();
         
         trig.key_last = trig.key;
 #endif

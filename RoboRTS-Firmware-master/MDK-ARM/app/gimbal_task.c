@@ -156,6 +156,7 @@ void gimbal_task(void const *argu)
   }
   else
   {
+		glb_cur.gimbal_cur[2] = pid_trigger_speed.out;
     memset(glb_cur.gimbal_cur, 0, sizeof(glb_cur.gimbal_cur));
     gim.ctrl_mode = GIMBAL_RELAX;
     //pid_trigger.iout = 0;

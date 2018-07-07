@@ -89,7 +89,7 @@ typedef void * QueueHandle_t;
 
 /**
  * Type by which queue sets are referenced.  For example, a call to
- * xQueueCreateSet() returns an xQueueSet variable that can then be used as a
+ * xQueueCreateSet() returns an xQueueSet variable that can then be usedf as a
  * parameter to xQueueSelectFromSet(), xQueueAddToSet(), etc.
  */
 typedef void * QueueSetHandle_t;
