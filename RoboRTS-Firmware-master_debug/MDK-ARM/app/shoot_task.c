@@ -172,7 +172,7 @@ static void fric_wheel_ctrl(void)
   }
 }
 
-int debug_tri_speed = 1500;
+int debug_tri_speed = 0;
 int shot_cmd;
 static void shoot_bullet_handle(void)
 {
@@ -189,7 +189,7 @@ static void shoot_bullet_handle(void)
     }
     else if (trig.one_sta == TRIG_PRESS_DOWN)
     {
-      if (HAL_GetTick() - trig.one_time >= 2000) //before the rising
+      if (HAL_GetTick() - trig.one_time >= 250) //before the rising
       {
         trig.one_sta = TRIG_ONE_DONE;
       }
@@ -225,7 +225,7 @@ static void shoot_bullet_handle(void)
       shot.shot_bullets++;
     }
     else
-      trig.spd_ref = debug_tri_speed;//trig.feed_bullet_spd;
+      trig.spd_ref = trig.feed_bullet_spd;//debug_tri_speed;
     
   }
   else if (shot.c_shoot_cmd)
@@ -260,7 +260,7 @@ void shot_param_init(void)
   memset(&trig, 0, sizeof(trigger_t));
   
   trig.dir             = 1;
-  trig.feed_bullet_spd = 2000;
+  trig.feed_bullet_spd = 3400;
   trig.c_shot_spd      = 4000;
   trig.one_sta         = TRIG_INIT;
   

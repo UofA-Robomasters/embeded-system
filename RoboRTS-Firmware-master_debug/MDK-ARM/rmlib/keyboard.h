@@ -49,6 +49,10 @@
 #define KB_OPEN_FRIC_WHEEL  (rc.kb.bit.Q)
 #define KB_CLOSE_FIRC_WHEEL (rc.kb.bit.Q && rc.kb.bit.SHIFT)
 
+// 			buffer
+#define BIG_BUFFER      (rc.kb.bit.B)
+#define SMALL_BUFFER      (rc.kb.bit.V)
+
 /**********************************************************************************
  * bit      :15   14   13   12   11   10   9   8   7   6     5     4   3   2   1
  * keyboard : V    C    X	  Z    G    F    R   E   Q  CTRL  SHIFT  D   A   S   W

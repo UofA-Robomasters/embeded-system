@@ -230,6 +230,7 @@ static void exit_buff_hook(uint8_t forward, uint8_t back,
     km.buff_ctrl = 0;
 }
 
+
 void keyboard_global_hook(void)
 {
   if (km.kb_enable)
