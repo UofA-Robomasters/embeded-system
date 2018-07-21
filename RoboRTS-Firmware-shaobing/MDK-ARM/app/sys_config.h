@@ -120,7 +120,7 @@
 /* the positive direction of pitch axis motor */
 #define PIT_MOTO_POSITIVE_DIR  1.0f
 /* the positive direction of yaw axis motor */
-#define YAW_MOTO_POSITIVE_DIR  -1.0f
+#define YAW_MOTO_POSITIVE_DIR  (-1.0f)
 /* the positive direction of tirgger motor */
 #define TRI_MOTO_POSITIVE_DIR  1.0f
 

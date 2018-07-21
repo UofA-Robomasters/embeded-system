@@ -126,12 +126,12 @@ void chassis_task(void const *argu)
   }
   
 	pc_send_mesg.student_custom_data.data[3] = (uint8_t)judge_rece_mesg.power_heat_data.chassis_power;
-	pc_send_mesg.student_custom_data.data[4] = ((uint16_t)judge_rece_mesg.power_heat_data.chassis_volt)&0x00ff;
+//	pc_send_mesg.student_custom_data.data[4] = ((uint16_t)judge_rece_mesg.power_heat_data.chassis_volt)&0x00ff;
 	pc_send_mesg.student_custom_data.data[5] = ((uint16_t)(judge_rece_mesg.power_heat_data.chassis_current*10)) & 0x00ff;
 	pc_send_mesg.student_custom_data.data[6] = ((uint16_t)(judge_rece_mesg.power_heat_data.chassis_current*10) >> 8) & 0x00ff;
 	pc_send_mesg.student_custom_data.data[7] = abs(chassis.current[0]) >> 8;
 	pc_send_mesg.student_custom_data.data[8] = abs(chassis.current[0]);
-	power_limit_handle(); //power limit control
+	//power_limit_handle(); //power limit control
 	
 	
 	
@@ -302,7 +302,7 @@ void chassis_param_init(void)
 #if 1
 int32_t total_cur_limit;
 int32_t total_cur;
-#define CURRENT_LIMIT   40000 // 5460
+#define CURRENT_LIMIT   80000 // for 3510, 40000 for 3508
 void power_limit_handle(void)
 {
   if (g_err.list[JUDGE_SYS_OFFLINE].err_exist)
@@ -312,11 +312,11 @@ void power_limit_handle(void)
   }
   else
   {
-    if (judge_rece_mesg.power_heat_data.chassis_pwr_buf < WARNING_ENERGY)
-      total_cur_limit = ((judge_rece_mesg.power_heat_data.chassis_pwr_buf* \
-                          judge_rece_mesg.power_heat_data.chassis_pwr_buf)/ \
-                          (WARNING_ENERGY*WARNING_ENERGY)) * CURRENT_LIMIT;
-    else
+//    if (judge_rece_mesg.power_heat_data.chassis_pwr_buf < WARNING_ENERGY)
+//      total_cur_limit = ((judge_rece_mesg.power_heat_data.chassis_pwr_buf* \
+//                          judge_rece_mesg.power_heat_data.chassis_pwr_buf)/ \
+//                          (WARNING_ENERGY*WARNING_ENERGY)) * CURRENT_LIMIT;
+//    else
       total_cur_limit = CURRENT_LIMIT;
   }
   

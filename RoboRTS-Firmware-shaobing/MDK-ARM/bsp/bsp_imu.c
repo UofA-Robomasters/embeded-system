@@ -210,11 +210,12 @@ void mpu_get_data(void)
   mpu_data.ay   = mpu_buff[2] << 8 | mpu_buff[3];
   mpu_data.az   = mpu_buff[4] << 8 | mpu_buff[5];
   mpu_data.temp = mpu_buff[6] << 8 | mpu_buff[7];
-
+	//mpu_data.az   = -mpu_data.az;
+	
   mpu_data.gx = ((mpu_buff[8] << 8 | mpu_buff[9])   - mpu_data.gx_offset);
   mpu_data.gy = ((mpu_buff[10] << 8 | mpu_buff[11]) - mpu_data.gy_offset);
   mpu_data.gz = ((mpu_buff[12] << 8 | mpu_buff[13]) - mpu_data.gz_offset);
-
+	//mpu_data.gz = -mpu_data.gz;
   //ist8310_get_data((uint8_t*)&mpu_data.mx);
 
   memcpy(&imu.ax, &mpu_data.ax, 6 * sizeof(int16_t));

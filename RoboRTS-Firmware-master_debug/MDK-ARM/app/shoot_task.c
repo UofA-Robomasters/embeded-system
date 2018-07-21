@@ -71,7 +71,7 @@ void shot_task(void const *argu)
         
         fric_wheel_ctrl();
         
-        if (!shot.fric_wheel_run)
+        if (!shot.fric_wheel_run || judge_rece_mesg.power_heat_data.shooter1_heat >= 85)
         {
           shot.shoot_cmd   = 0;
           shot.c_shoot_cmd = 0;
@@ -181,11 +181,11 @@ static void shoot_bullet_handle(void)
   {
     if (trig.one_sta == TRIG_INIT)
     {
-      if (trig.key == 0)
-      {
+      //if (trig.key == 0)
+      //{
         trig.one_sta = TRIG_PRESS_DOWN;
         trig.one_time = HAL_GetTick();
-      }
+    //  }
     }
     else if (trig.one_sta == TRIG_PRESS_DOWN)
     {
@@ -194,24 +194,24 @@ static void shoot_bullet_handle(void)
         trig.one_sta = TRIG_ONE_DONE;
       }
 
-      if ((trig.key_last == 0) && (trig.key))    //Rising edge trigger button bounce
-      {
-        trig.one_sta = TRIG_BOUNCE_UP;
-        trig.one_time = HAL_GetTick();
-      }
+//      if ((trig.key_last == 0) && (trig.key))    //Rising edge trigger button bounce
+//      {
+//        trig.one_sta = TRIG_BOUNCE_UP;
+//        trig.one_time = HAL_GetTick();
+//      }
     }
-    else if (trig.one_sta == TRIG_BOUNCE_UP)
-    {
-      if (HAL_GetTick() - trig.one_time >= 2000)
-      {
-        trig.one_sta = TRIG_ONE_DONE;
-      }
-      
-      if ((trig.key_last) && (trig.key == 0))    //Falling edge trigger button be press
-      {
-        trig.one_sta = TRIG_ONE_DONE;
-      }
-    }
+//    else if (trig.one_sta == TRIG_BOUNCE_UP)
+//    {
+//      if (HAL_GetTick() - trig.one_time >= 2000)
+//      {
+//        trig.one_sta = TRIG_ONE_DONE;
+//      }
+//      
+//      if ((trig.key_last) && (trig.key == 0))    //Falling edge trigger button be press
+//      {
+//        trig.one_sta = TRIG_ONE_DONE;
+//      }
+//    }
     else
     {
     }
@@ -220,12 +220,14 @@ static void shoot_bullet_handle(void)
     {
       trig.spd_ref = 0;
       trig.one_sta = TRIG_INIT;
-      
+      pc_rece_mesg.shoot_control_data.shoot_cmd = 0;
       shot.shoot_cmd = 0;
+			
       shot.shot_bullets++;
     }
     else
       trig.spd_ref = trig.feed_bullet_spd;//debug_tri_speed;
+			pc_send_mesg.student_custom_data.data[4] = shot.shoot_cmd;
     
   }
   else if (shot.c_shoot_cmd)
@@ -241,7 +243,7 @@ static void shoot_bullet_handle(void)
   else
   {
     if (trig.key)       //not trigger
-      trig.spd_ref = 0;//debug_tri_speed;//trig.feed_bullet_spd;
+      trig.spd_ref = debug_tri_speed;//trig.feed_bullet_spd;
     else
       trig.spd_ref = 0;
   }

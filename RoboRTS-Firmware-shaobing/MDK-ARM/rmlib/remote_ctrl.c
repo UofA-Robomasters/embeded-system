@@ -43,7 +43,7 @@ void rc_callback_handle(rc_info_t *rc, uint8_t *buff)
   rc->ch2 -= 1024;
   rc->ch3 = (buff[2] >> 6 | buff[3] << 2 | buff[4] << 10) & 0x07FF;
   rc->ch3 -= 1024;
-	//rc->ch3 = -(rc->ch3); //added for shaobing	
+//	rc->ch3 = -(rc->ch3); //added for shaobing	
   rc->ch4 = (buff[4] >> 1 | buff[5] << 7) & 0x07FF;
   rc->ch4 -= 1024;
 	rc->ch4 = -(rc->ch4); // pitch motor install in opposite direction
