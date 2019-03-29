@@ -110,7 +110,7 @@ uint32_t comm_time_last;
 int comm_time_ms;
 
 uint16_t tx_packet_id = CHASSIS_DATA_ID;
-//int count_cali_count;
+int count_cali_count;
 extern TaskHandle_t pc_unpack_task_t;
 void freq_info_task(void const *argu)
 {
@@ -131,11 +131,13 @@ void freq_info_task(void const *argu)
 //                               sizeof(version_info_t), UP_REG_ID);
 //      
 //    }
-//    else
-    {
+    if (count_cali_count == 1) //50Hz
+		{
+			count_cali_count = 0;
+    
       switch (tx_packet_id)
       {
-        case CHASSIS_DATA_ID:
+				case CHASSIS_DATA_ID:
         {
           data_packet_pack(CHASSIS_DATA_ID, (uint8_t *)&pc_send_mesg.chassis_information, 
                                    sizeof(chassis_info_t), UP_REG_ID);
@@ -187,26 +189,27 @@ void freq_info_task(void const *argu)
 				{
 					data_packet_pack(CLIENT_TO_ROBOT_ID, (uint8_t *)&pc_send_mesg.student_custom_data,
                                    sizeof(server_to_user_t), UP_REG_ID);
-					tx_packet_id = STU_CUSTOM_DATA_ID;
-				}
-				case STU_CUSTOM_DATA_ID:
-				{
-					data_packet_pack(STU_CUSTOM_DATA_ID, (uint8_t *)&pc_rece_mesg.show_in_client_data,
-                     sizeof(client_show_data_t), DN_REG_ID);
-					osSignalSet(judge_unpack_task_t, JUDGE_UART_TX_SIGNAL);					
 					tx_packet_id = CHASSIS_DATA_ID;
-				}
+				} break;
 			}
-    }
-    
-    osSignalSet(pc_unpack_task_t, PC_UART_TX_SIGNAL);
+		}
+		else	
+			{	
+				count_cali_count++; 
+				
+				data_packet_pack(STU_CUSTOM_DATA_ID, (uint8_t *)&pc_rece_mesg.show_in_client_data,
+                     sizeof(client_show_data_t), DN_REG_ID);
+									
+			}
+     
+		osSignalSet(pc_unpack_task_t, PC_UART_TX_SIGNAL);
     
     freq_info_surplus = uxTaskGetStackHighWaterMark(NULL);
     
     osDelayUntil(&comm_wake_time, COMM_TASK_PERIOD);
   }
-
 }
+
 #define UART_RX_BUFF_LEN 50
 uint8_t judge_buff[UART_RX_BUFF_LEN];
 uint8_t pc_buff[UART_RX_BUFF_LEN];
@@ -256,7 +259,7 @@ void judge_unpack_task(void const *argu)
     judge_comm_surplus = uxTaskGetStackHighWaterMark(NULL);
   }
 }
-extern TaskHandle_t freq_info_task_t;
+extern TaskHandle_t freq_info_task_t; //calls the packing function for all related info
 uint8_t pc_rx_test[40];
 void pc_unpack_task(void const *argu) //send/receive data to pc
 {
